@@ -1,16 +1,17 @@
 import React from 'react'
 
-interface IItem {
+export interface IItem {
     id: string,
+    name: string,
     price: number,
-    count: number
+    amount: number
 }
 
 export interface IContextProp {
     items: IItem[],
-    totalAmount: 0,
-    addItem: (item: any) => {},
-    removeItem: (item: any) => {},
+    totalAmount: number,
+    addItem: (item: IItem) => void,
+    removeItem: (id: string) => void
 
 }
 
