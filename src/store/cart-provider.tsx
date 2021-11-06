@@ -1,20 +1,21 @@
 import React, { FC, ReactNode, useReducer } from 'react'
-import CartContext, { IContextProp, IItem } from './cart-context'
+import CartContext, { IContextProp, ICartItem } from './cart-context'
 
 
 enum Action {
   ADD,
   REMOVE,
+  CLEAR,
 }
 
 interface CartState {
-  items: IItem[],
+  items: ICartItem[],
   totalAmount: number
 }
 
 interface CartAction {
   type: Action,
-  payload: IItem | string
+  payload?: ICartItem | string
 }
 
 
@@ -27,11 +28,11 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 
   switch (action.type) {
     case Action.ADD: {
-      const item = action.payload as IItem;
-      const existingCartItemIndex: number = state.items.findIndex((item) => (item.id === item.id))
-      const existingCartItem: IItem = state.items[existingCartItemIndex];
+      const item = action.payload as ICartItem;
+      const existingCartItemIndex: number = state.items.findIndex((i) => (i.id === item.id))
+      const existingCartItem: ICartItem = state.items[existingCartItemIndex];
 
-      let updatedItems: IItem[];
+      let updatedItems: ICartItem[];
 
       if (existingCartItem) {
         const updatedItem = {
@@ -74,6 +75,11 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         totalAmount: updatedTotalAmount
       }
     }
+
+    case Action.CLEAR: {
+      return defaultState
+    }
+
     default:
       return defaultState
   }
@@ -85,14 +91,17 @@ const CartProvider: FC<{ children: ReactNode[] }> = ({ children }) => {
   const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultState)
 
 
-  const addItemTocCartHandler = (item: IItem): void => { dispatchCartAction({ type: Action.ADD, payload: item } as CartAction) }
+  const addItemTocCartHandler = (item: ICartItem): void => { dispatchCartAction({ type: Action.ADD, payload: item }) }
   const removeItemFromCartHandler = (id: string): void => { dispatchCartAction({ type: Action.REMOVE, payload: id }) }
+  const clearCartHandler = () => { dispatchCartAction({ type: Action.CLEAR }) }
 
   const cartContent: IContextProp = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemTocCartHandler,
-    removeItem: removeItemFromCartHandler
+    removeItem: removeItemFromCartHandler,
+    clearCart: clearCartHandler
+
   }
 
 

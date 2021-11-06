@@ -1,5 +1,5 @@
-import React, { FC, forwardRef } from 'react'
 import classes from './input.module.css'
+import React from 'react';
 
 type InputProps = {
    

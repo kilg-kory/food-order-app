@@ -1,11 +1,8 @@
-import React, { FC, useRef, useState } from 'react'
+import React, { FC, useState } from 'react'
 import classes from './meal-item.module.css'
 import Input from '../../ui/input'
 
-
-
-
-const MealItemForm: FC<{id: string, onAddToCart: (amount: number) => void}> = ({ id, onAddToCart }) => {
+const MealItemForm: FC<{id: string, onAddToCart: (amount: number) => void}> = ({ id,  onAddToCart }) => {
 
   const amountInputRef = React.useRef<HTMLInputElement>(null);
   const [amountIsValid, setAmountIsValid] = useState(true)
@@ -25,8 +22,6 @@ const MealItemForm: FC<{id: string, onAddToCart: (amount: number) => void}> = ({
 
   }
   
-
-
 
   return (
         <form onSubmit={submitHandler} className={classes.form}>

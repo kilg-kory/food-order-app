@@ -1,17 +1,25 @@
 import React from 'react'
 
+
 export interface IItem {
     id: string,
     name: string,
-    price: number,
+    description: string,
+    price: number
+}
+
+
+
+export interface ICartItem extends IItem {
     amount: number
 }
 
 export interface IContextProp {
-    items: IItem[],
+    items: ICartItem[],
     totalAmount: number,
-    addItem: (item: IItem) => void,
-    removeItem: (id: string) => void
+    addItem: (item: ICartItem) => void,
+    removeItem: (id: string) => void,
+    clearCart: () => void
 
 }
 
